@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HarnessAI Desk</title>
+    <style>
+        :root {
+            --bg-color: #f9fafb;
+            --text-color: #111827;
+            --primary: #111827;
+            --primary-hover: #374151;
+            --card-bg: #ffffff;
+            --border-color: #e5e7eb;
+            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .tagline {
+            color: #4b5563;
+            margin-top: 0.25rem;
+        }
+
+        .search-container {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 0.5rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .form-group {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            font-size: 1.1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 0.375rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        input[type="text"]:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(17, 24, 39, 0.15);
+        }
+
+        button {
+            padding: 0.75rem 1.5rem;
+            font-size: 1.1rem;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        button:hover {
+            background-color: var(--primary-hover);
+        }
+
+        button:disabled {
+            background-color: #9ca3af;
+            cursor: not-allowed;
+        }
+
+        .advanced-options {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+            font-size: 0.9rem;
+            color: #4b5563;
+            flex-wrap: wrap;
+        }
+
+        select, input[type="number"] {
+            padding: 0.375rem 0.5rem;
+            border: 1px solid var(--border-color);
+            border-radius: 0.25rem;
+        }
+
+        .language-mode {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+            max-width: 440px;
+        }
+
+        .language-mode-label {
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        .language-mode-help {
+            margin-left: 1.35rem;
+            font-size: 0.8rem;
+            color: #6b7280;
+            line-height: 1.35;
+        }
+
+        .example-questions {
+            margin-top: 1.25rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .example-questions button {
+            font-size: 0.85rem;
+            padding: 0.45rem 0.7rem;
+            background: #f3f4f6;
+            color: #111827;
+            border: 1px solid var(--border-color);
+        }
+
+        .example-questions button:hover {
+            background: #e5e7eb;
+        }
+
+        .results-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .answer-box {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 0.5rem;
+            border-left: 4px solid var(--primary);
+            box-shadow: var(--shadow);
+            display: none;
+        }
+
+        .answer-box h2 {
+            margin-top: 0;
+            font-size: 1.5rem;
+            color: var(--text-color);
+        }
+
+        .context-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+
+        .context-card {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+        }
+
+        .context-card h3 {
+            margin-top: 0;
+            font-size: 1.1rem;
+            color: var(--text-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .context-card .meta {
+            font-size: 0.85rem;
+            color: #6b7280;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .context-card .snippet {
+            font-size: 0.95rem;
+            color: #374151;
+            white-space: pre-wrap;
+        }
+
+        .loader {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+            color: #6b7280;
+        }
+
+        .error-message {
+            background-color: #fee2e2;
+            color: #b91c1c;
+            padding: 1rem;
+            border-radius: 0.375rem;
+            margin-bottom: 1rem;
+            display: none;
+            border: 1px solid #fca5a5;
+        }
+
+        .answer-content {
+            white-space: pre-wrap;
+            font-size: 1.1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>HarnessAI Desk</h1>
+            <p class="tagline">Ask questions about HarnessAI, CommPilot, AI consulting, AnythingLLM, and synthetic data.</p>
+        </header>
+
+        <div class="search-container">
+            <form id="search-form">
+                <div class="form-group">
+                    <input type="text" id="query" placeholder="E.g., What is CommPilot and how does it work?" required>
+                    <button type="submit" id="submit-btn">Ask HarnessAI</button>
+                </div>
+                <div class="advanced-options">
+                    <label>
+                        Language:
+                        <select id="language">
+                            <option value="auto">Auto-detect</option>
+                            <option value="English">English</option>
+                            <option value="Spanish">Spanish</option>
+                            <option value="French">French</option>
+                            <option value="Haitian Creole">Haitian Creole</option>
+                        </select>
+                    </label>
+                    <label>
+                        Top K:
+                        <input type="number" id="top-k" value="5" min="1" max="20" style="width: 60px;">
+                    </label>
+                    <div class="language-mode">
+                        <!-- Heuristic language detection mode: when checked, the app uses local rule-based language detection instead of the model-based language translation/classification path. -->
+                        <label class="language-mode-label">
+                            <input type="checkbox" id="no-model-language"> Use faster rule-based language detection
+                        </label>
+                        <div class="language-mode-help">
+                            Faster and cheaper, but less accurate for multilingual questions. Leave unchecked for best Spanish, French, and Haitian Creole support.
+                        </div>
+                    </div>
+                </div>
+                <div class="example-questions" aria-label="Example questions">
+                    <button type="button" data-question="What does HarnessAI do?">What does HarnessAI do?</button>
+                    <button type="button" data-question="What is CommPilot?">What is CommPilot?</button>
+                    <button type="button" data-question="Can CommPilot answer in Haitian Creole?">Can it answer in Haitian Creole?</button>
+                    <button type="button" data-question="What is a good first AI pilot for a nonprofit?">First pilot?</button>
+                    <button type="button" data-question="What should this system not answer?">Boundaries?</button>
+                </div>
+            </form>
+        </div>
+
+        <div id="error-box" class="error-message"></div>
+        <div id="loader" class="loader">Searching the HarnessAI knowledge base and generating answer...</div>
+
+        <div class="results-container" id="results-container">
+            <div class="answer-box" id="answer-box">
+                <h2>Answer</h2>
+                <div id="answer-content" class="answer-content"></div>
+                <p style="margin-top: 1.5rem; font-size: 0.9rem; color: #6b7280;">
+                    Detected Language: <span id="detected-language"></span> |
+                    Retrieval Query: <span id="retrieval-query"></span>
+                </p>
+            </div>
+
+            <div id="context-container" style="display: none;">
+                <h2 style="margin-bottom: 1rem; font-size: 1.25rem;">Sources</h2>
+                <div class="context-list" id="context-list"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('search-form');
+        const queryInput = document.getElementById('query');
+        const submitBtn = document.getElementById('submit-btn');
+        const loader = document.getElementById('loader');
+        const errorBox = document.getElementById('error-box');
+        const answerBox = document.getElementById('answer-box');
+        const answerContent = document.getElementById('answer-content');
+        const contextContainer = document.getElementById('context-container');
+        const contextList = document.getElementById('context-list');
+        const languageSpan = document.getElementById('detected-language');
+        const retrievalQuerySpan = document.getElementById('retrieval-query');
+
+        document.querySelectorAll('[data-question]').forEach(button => {
+            button.addEventListener('click', () => {
+                queryInput.value = button.dataset.question;
+                queryInput.focus();
+            });
+        });
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const query = queryInput.value.trim();
+            if (!query) return;
+
+            errorBox.style.display = 'none';
+            answerBox.style.display = 'none';
+            contextContainer.style.display = 'none';
+            contextList.innerHTML = '';
+            loader.style.display = 'block';
+            submitBtn.disabled = true;
+
+            const language = document.getElementById('language').value;
+            const top_k = parseInt(document.getElementById('top-k').value);
+            const no_model_language = document.getElementById('no-model-language').checked;
+
+            try {
+                const response = await fetch('/api/answer', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        query,
+                        language,
+                        top_k,
+                        no_model_language
+                    })
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.error || 'Something went wrong');
+                }
+
+                answerContent.textContent = data.answer;
+                languageSpan.textContent = data.detected_language;
+                retrievalQuerySpan.textContent = data.retrieval_query;
+                answerBox.style.display = 'block';
+
+                if (data.context && data.context.length > 0) {
+                    data.context.forEach(block => {
+                        const card = document.createElement('div');
+                        card.className = 'context-card';
+
+                        const sourceLabel = block.policy_number || block.filename;
+                        const sourceTitle = block.policy_title || block.section_title || 'HarnessAI knowledge base';
+                        const snippet = block.snippet || (block.excerpt ? block.excerpt.substring(0, 240) + '...' : '');
+
+                        card.innerHTML = `
+                            <h3>${sourceLabel} - ${sourceTitle}</h3>
+                            <div class="meta">
+                                Section: ${block.section_title || sourceTitle}<br>
+                                File: ${block.filename}
+                            </div>
+                            <div class="snippet">${snippet.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</div>
+                        `;
+                        contextList.appendChild(card);
+                    });
+                    contextContainer.style.display = 'block';
+                }
+
+            } catch (err) {
+                errorBox.textContent = err.message;
+                errorBox.style.display = 'block';
+            } finally {
+                loader.style.display = 'none';
+                submitBtn.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>

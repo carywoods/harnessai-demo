@@ -13,7 +13,7 @@ import os
 from pathlib import Path
 from datetime import datetime
 
-from pike_policy_rag import (
+from policy_rag import (
     normalize_search_query,
     likely_language_from_text,
     model_detect_and_translate_query,

@@ -396,6 +396,16 @@
             border-radius: 0.85rem;
             padding: 1rem;
             box-shadow: var(--soft-shadow);
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            border-color: #bda982;
+            box-shadow: 0 14px 36px rgba(46, 36, 22, 0.13);
         }
 
         .card-top {
@@ -589,7 +599,7 @@
             <div class="nav-links">
                 <a href="#demo">Demo</a>
                 <a href="#library">Library</a>
-                <a href="mailto:cary@indybiosystems.com">Contact</a>
+                <a href="mailto:support@harnessai.net">Contact</a>
             </div>
         </nav>
 
@@ -608,12 +618,12 @@
                 <div>
                     <p class="eyebrow">Flagship demo</p>
                     <h2>CommPilot is the <em>digital front desk</em>.</h2>
-                    <p>It reads a question, retrieves relevant knowledge, and drafts a useful answer in natural language. The current demo is intentionally small, visible, and testable.</p>
+                    <p>It reads a question, finds the right context, and drafts a useful answer in natural language. The current demo is intentionally small, visible, and testable.</p>
                 </div>
                 <ul class="proof-list">
                     <li><strong>Communication:</strong> intake, FAQ response, routing, and translation.</li>
-                    <li><strong>Knowledge:</strong> answers grounded in Markdown files and a searchable index.</li>
-                    <li><strong>Deployment:</strong> Flask, SQLite FTS, Docker, and Coolify-friendly hosting.</li>
+                    <li><strong>Knowledge:</strong> useful answers based on the organization’s own information.</li>
+                    <li><strong>Deployment:</strong> simple enough to pilot, practical enough to use.</li>
                 </ul>
             </aside>
         </section>
@@ -690,73 +700,73 @@
             </div>
 
             <div class="library-grid">
-                <article class="card">
+                <a class="card" href="#demo">
                     <div class="card-top">
                         <h3>CommPilot</h3>
                         <span class="badge">Live Demo</span>
                     </div>
                     <p>Email-based digital front desk for intake, FAQ response, routing, and multilingual communication.</p>
                     <span class="category">Communication</span>
-                </article>
+                </a>
 
-                <article class="card">
+                <a class="card" href="https://machineryofdemocracy.com" target="_blank" rel="noreferrer">
                     <div class="card-top">
                         <h3>Machinery of Democracy</h3>
                         <span class="badge">Public System</span>
                     </div>
                     <p>A public systems project focused on civic infrastructure, service access, and operational analysis.</p>
                     <span class="category">Civic Systems</span>
-                </article>
+                </a>
 
-                <article class="card">
+                <a class="card" href="https://midterm.machineryofdemocracy.com" target="_blank" rel="noreferrer">
                     <div class="card-top">
                         <h3>Midterm Analysis System</h3>
                         <span class="badge">Public System</span>
                     </div>
                     <p>A public data and analysis system for understanding civic patterns over time.</p>
                     <span class="category">Public Data</span>
-                </article>
+                </a>
 
-                <article class="card">
+                <a class="card" href="mailto:support@harnessai.net?subject=Policy%20Analysis%20System">
                     <div class="card-top">
                         <h3>Policy Analysis System</h3>
                         <span class="badge">Research</span>
                     </div>
                     <p>A structured environment for evaluating proposals, downstream effects, and practical tradeoffs.</p>
                     <span class="category">Policy</span>
-                </article>
+                </a>
 
-                <article class="card">
+                <a class="card" href="https://energy.harnessai.net" target="_blank" rel="noreferrer">
                     <div class="card-top">
                         <h3>Energy Analysis System</h3>
                         <span class="badge">Research</span>
                     </div>
                     <p>Forecasting and simulation tools for energy demand, grid planning, and sustainability decisions.</p>
                     <span class="category">Energy</span>
-                </article>
+                </a>
 
-                <article class="card">
+                <a class="card" href="mailto:support@harnessai.net?subject=Indy%20BioSystems%20LBSO">
                     <div class="card-top">
                         <h3>Indy BioSystems LBSO</h3>
                         <span class="badge">Scientific</span>
                     </div>
                     <p>Scientific modeling work for biological systems, synthetic biology, and research decision support.</p>
                     <span class="category">Biological Modeling</span>
-                </article>
+                </a>
 
-                <article class="card">
+                <a class="card" href="mailto:support@harnessai.net?subject=Project%20Phenix">
                     <div class="card-top">
                         <h3>Project Phenix</h3>
                         <span class="badge">Coming Soon</span>
                     </div>
                     <p>Experimental work exploring localized climate modeling and sensor-informed adaptation.</p>
                     <span class="category">Experimental</span>
-                </article>
+                </a>
             </div>
         </section>
 
         <footer>
-            HarnessAI builds practical AI systems for communication, knowledge work, research, and operations.
+            HarnessAI builds practical AI systems for communication, knowledge work, research, and operations. Contact support@harnessai.net.
         </footer>
     </div>
 

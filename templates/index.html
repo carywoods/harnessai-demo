@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HarnessAI Desk</title>
+    <title>HarnessAI | Practical AI Systems</title>
     <style>
         :root {
             --bg: #f7f4ef;
@@ -28,6 +28,10 @@
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             background:
@@ -40,47 +44,92 @@
             line-height: 1.5;
         }
 
+        a {
+            color: inherit;
+        }
+
         .container {
-            max-width: 1060px;
+            max-width: 1120px;
             margin: 0 auto;
-            padding: 3rem 2rem;
+            padding: 2rem;
         }
 
-        header {
-            text-align: center;
-            margin-bottom: 2.75rem;
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
         }
 
-        h1 {
-            font-size: clamp(2.35rem, 6vw, 4rem);
-            margin-bottom: 0.5rem;
-            letter-spacing: -0.04em;
+        .brand {
+            font-weight: 800;
             color: var(--text-bright);
+            letter-spacing: -0.03em;
+            font-size: 1.25rem;
         }
 
-        h1 em {
+        .brand em {
             color: var(--amber);
             font-style: normal;
         }
 
-        .tagline {
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            font-size: 0.95rem;
             color: var(--text-dim);
-            margin-top: 0.25rem;
-            font-size: 1.05rem;
         }
 
-        .search-container {
-            background: rgba(255, 255, 255, 0.82);
-            padding: 2rem;
-            border-radius: 0.9rem;
-            box-shadow: var(--shadow);
+        .nav-links a {
+            text-decoration: none;
+            font-weight: 650;
+        }
+
+        .nav-links a:hover {
+            color: var(--amber-dim);
+        }
+
+        .hero {
+            display: grid;
+            grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
+            gap: 2rem;
+            align-items: stretch;
             margin-bottom: 2rem;
+        }
+
+        .hero-copy,
+        .hero-card,
+        .search-container,
+        .library-section,
+        .answer-box,
+        .context-card {
+            background: rgba(255, 255, 255, 0.86);
             border: 1px solid var(--border);
+            box-shadow: var(--shadow);
             position: relative;
             overflow: hidden;
         }
 
+        .hero-copy,
+        .hero-card,
+        .search-container,
+        .library-section,
+        .answer-box {
+            border-radius: 0.95rem;
+        }
+
+        .hero-copy,
+        .hero-card,
+        .library-section {
+            padding: 2rem;
+        }
+
+        .hero-copy::before,
+        .hero-card::before,
         .search-container::before,
+        .library-section::before,
         .answer-box::before,
         .context-card::before {
             content: '';
@@ -90,6 +139,154 @@
             right: 0;
             height: 3px;
             background: linear-gradient(90deg, var(--amber), #c08a2d);
+        }
+
+        .eyebrow {
+            margin: 0 0 0.8rem;
+            color: var(--amber-dim);
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+            font-size: 0.78rem;
+            font-weight: 800;
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 6vw, 4.4rem);
+            line-height: 0.96;
+            margin: 0 0 1rem;
+            letter-spacing: -0.06em;
+            color: var(--text-bright);
+        }
+
+        h1 em,
+        h2 em {
+            color: var(--amber);
+            font-style: normal;
+        }
+
+        h2 {
+            font-size: clamp(1.75rem, 4vw, 2.5rem);
+            line-height: 1.05;
+            margin: 0 0 0.85rem;
+            letter-spacing: -0.04em;
+            color: var(--text-bright);
+        }
+
+        h3 {
+            color: var(--text-bright);
+        }
+
+        .lede {
+            color: var(--text-dim);
+            font-size: 1.18rem;
+            max-width: 720px;
+            margin: 0 0 1.5rem;
+        }
+
+        .cta-row {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+            margin-top: 1.25rem;
+        }
+
+        .button-link,
+        button {
+            padding: 0.85rem 1.15rem;
+            font-size: 1rem;
+            background: var(--amber);
+            color: #fffaf2;
+            border: 1px solid var(--amber);
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s, background 0.2s, opacity 0.2s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 750;
+            text-decoration: none;
+        }
+
+        .button-link.secondary {
+            background: var(--surface2);
+            color: var(--amber-dim);
+            border-color: var(--border);
+        }
+
+        .button-link:hover,
+        button:hover {
+            background: var(--amber-dim);
+            transform: translateY(-1px);
+            box-shadow: 0 10px 24px rgba(154, 98, 0, 0.2);
+        }
+
+        .button-link.secondary:hover {
+            background: #e7ddcc;
+            color: var(--amber-dim);
+            border-color: #bda982;
+            box-shadow: none;
+        }
+
+        button:disabled {
+            opacity: 0.55;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .hero-card {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 100%;
+        }
+
+        .hero-card h2 {
+            font-size: 1.8rem;
+        }
+
+        .hero-card p,
+        .library-intro,
+        .card p,
+        .tagline {
+            color: var(--text-dim);
+        }
+
+        .proof-list {
+            margin: 1.25rem 0 0;
+            padding: 0;
+            list-style: none;
+            display: grid;
+            gap: 0.75rem;
+        }
+
+        .proof-list li {
+            border-top: 1px solid var(--border);
+            padding-top: 0.75rem;
+            color: var(--text);
+        }
+
+        .proof-list strong {
+            color: var(--text-bright);
+        }
+
+        .search-container {
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .search-heading {
+            margin-bottom: 1.35rem;
+        }
+
+        .search-heading h2 {
+            margin-bottom: 0.35rem;
+        }
+
+        .search-heading p {
+            margin: 0;
+            color: var(--text-dim);
+            font-size: 1.05rem;
         }
 
         .form-group {
@@ -117,34 +314,6 @@
         input[type="text"]:focus {
             border-color: var(--amber);
             box-shadow: 0 0 0 3px var(--focus);
-        }
-
-        button {
-            padding: 0.85rem 1.5rem;
-            font-size: 1.05rem;
-            background: var(--amber);
-            color: #fffaf2;
-            border: 1px solid var(--amber);
-            border-radius: 0.5rem;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s, background 0.2s, opacity 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 650;
-        }
-
-        button:hover {
-            background: var(--amber-dim);
-            transform: translateY(-1px);
-            box-shadow: 0 10px 24px rgba(154, 98, 0, 0.2);
-        }
-
-        button:disabled {
-            opacity: 0.55;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
         }
 
         .advanced-options {
@@ -206,6 +375,73 @@
             box-shadow: none;
         }
 
+        .library-section {
+            margin-bottom: 2rem;
+        }
+
+        .library-header {
+            max-width: 780px;
+            margin-bottom: 1.25rem;
+        }
+
+        .library-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1rem;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.78);
+            border: 1px solid var(--border);
+            border-radius: 0.85rem;
+            padding: 1rem;
+            box-shadow: var(--soft-shadow);
+        }
+
+        .card-top {
+            display: flex;
+            justify-content: space-between;
+            gap: 0.75rem;
+            align-items: flex-start;
+            margin-bottom: 0.75rem;
+        }
+
+        .card h3 {
+            margin: 0;
+            font-size: 1.08rem;
+            line-height: 1.15;
+        }
+
+        .card p {
+            margin: 0.65rem 0 0;
+            font-size: 0.95rem;
+        }
+
+        .badge,
+        .category {
+            display: inline-flex;
+            align-items: center;
+            border-radius: 999px;
+            font-size: 0.72rem;
+            font-weight: 800;
+            line-height: 1;
+            white-space: nowrap;
+        }
+
+        .badge {
+            background: rgba(154, 98, 0, 0.1);
+            border: 1px solid rgba(154, 98, 0, 0.16);
+            color: var(--amber-dim);
+            padding: 0.35rem 0.5rem;
+        }
+
+        .category {
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-top: 0.8rem;
+        }
+
         .results-container {
             display: flex;
             flex-direction: column;
@@ -213,20 +449,13 @@
         }
 
         .answer-box {
-            background: rgba(255, 255, 255, 0.9);
             padding: 2rem;
-            border-radius: 0.9rem;
-            border: 1px solid var(--border);
-            box-shadow: var(--shadow);
             display: none;
-            position: relative;
-            overflow: hidden;
         }
 
         .answer-box h2 {
             margin-top: 0;
             font-size: 1.5rem;
-            color: var(--text-bright);
         }
 
         .context-list {
@@ -245,8 +474,6 @@
             border-radius: 0.9rem;
             border: 1px solid var(--border);
             box-shadow: var(--soft-shadow);
-            position: relative;
-            overflow: hidden;
             transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
         }
 
@@ -259,7 +486,6 @@
         .context-card h3 {
             margin-top: 0;
             font-size: 1.05rem;
-            color: var(--text-bright);
             margin-bottom: 0.5rem;
         }
 
@@ -318,29 +544,86 @@
             color: var(--text-dim) !important;
         }
 
+        footer {
+            color: var(--text-dim);
+            text-align: center;
+            font-size: 0.9rem;
+            padding: 1.5rem 0 0;
+        }
+
+        @media (max-width: 850px) {
+            .hero {
+                grid-template-columns: 1fr;
+            }
+
+            .topbar {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+        }
+
         @media (max-width: 720px) {
             .container {
-                padding: 2rem 1rem;
+                padding: 1.25rem;
             }
 
             .form-group {
                 flex-direction: column;
             }
 
-            button {
+            button,
+            .button-link {
                 width: 100%;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <header>
-            <h1>HarnessAI <em>Desk</em></h1>
-            <p class="tagline">Ask questions about HarnessAI, CommPilot, AI consulting, AnythingLLM, and synthetic data.</p>
-        </header>
+        <nav class="topbar" aria-label="Primary navigation">
+            <div class="brand">Harness<em>AI</em></div>
+            <div class="nav-links">
+                <a href="#demo">Demo</a>
+                <a href="#library">Library</a>
+                <a href="mailto:cary@indybiosystems.com">Contact</a>
+            </div>
+        </nav>
 
-        <div class="search-container">
+        <section class="hero" aria-label="HarnessAI overview">
+            <div class="hero-copy">
+                <p class="eyebrow">Practical AI systems</p>
+                <h1>Useful AI for real organizational work.</h1>
+                <p class="lede">HarnessAI builds lightweight tools that answer questions, search private knowledge, translate communication, and reduce administrative load without requiring a major software overhaul.</p>
+                <div class="cta-row">
+                    <a class="button-link" href="#demo">Try the demo</a>
+                    <a class="button-link secondary" href="#library">View the library</a>
+                </div>
+            </div>
+
+            <aside class="hero-card" aria-label="CommPilot summary">
+                <div>
+                    <p class="eyebrow">Flagship demo</p>
+                    <h2>CommPilot is the <em>digital front desk</em>.</h2>
+                    <p>It reads a question, retrieves relevant knowledge, and drafts a useful answer in natural language. The current demo is intentionally small, visible, and testable.</p>
+                </div>
+                <ul class="proof-list">
+                    <li><strong>Communication:</strong> intake, FAQ response, routing, and translation.</li>
+                    <li><strong>Knowledge:</strong> answers grounded in Markdown files and a searchable index.</li>
+                    <li><strong>Deployment:</strong> Flask, SQLite FTS, Docker, and Coolify-friendly hosting.</li>
+                </ul>
+            </aside>
+        </section>
+
+        <section class="search-container" id="demo" aria-label="HarnessAI demo">
+            <div class="search-heading">
+                <p class="eyebrow">Live question-answering demo</p>
+                <h2>Ask HarnessAI Desk</h2>
+                <p>Ask about HarnessAI, CommPilot, AI consulting, AnythingLLM, synthetic data, or practical first deployments.</p>
+            </div>
             <form id="search-form">
                 <div class="form-group">
                     <input type="text" id="query" placeholder="E.g., What is CommPilot and how does it work?" required>
@@ -362,7 +645,6 @@
                         <input type="number" id="top-k" value="5" min="1" max="20" style="width: 60px;">
                     </label>
                     <div class="language-mode">
-                        <!-- Heuristic language detection mode: when checked, the app uses local rule-based language detection instead of the model-based language translation/classification path. -->
                         <label class="language-mode-label">
                             <input type="checkbox" id="no-model-language"> Use faster rule-based language detection
                         </label>
@@ -379,7 +661,7 @@
                     <button type="button" data-question="What should this system not answer?">Boundaries?</button>
                 </div>
             </form>
-        </div>
+        </section>
 
         <div id="error-box" class="error-message"></div>
         <div id="loader" class="loader">Searching the HarnessAI knowledge base and generating answer...</div>
@@ -399,6 +681,83 @@
                 <div class="context-list" id="context-list"></div>
             </div>
         </div>
+
+        <section class="library-section" id="library" aria-label="HarnessAI systems library">
+            <div class="library-header">
+                <p class="eyebrow">Systems library</p>
+                <h2>Small systems. Real use cases. Room to grow.</h2>
+                <p class="library-intro">The library shows the broader HarnessAI workshop: communication systems, public-interest tools, energy analysis, scientific modeling, and experimental AI. Some are live systems. Some are research systems. Some are simply the next useful tool waiting to be packaged.</p>
+            </div>
+
+            <div class="library-grid">
+                <article class="card">
+                    <div class="card-top">
+                        <h3>CommPilot</h3>
+                        <span class="badge">Live Demo</span>
+                    </div>
+                    <p>Email-based digital front desk for intake, FAQ response, routing, and multilingual communication.</p>
+                    <span class="category">Communication</span>
+                </article>
+
+                <article class="card">
+                    <div class="card-top">
+                        <h3>Machinery of Democracy</h3>
+                        <span class="badge">Public System</span>
+                    </div>
+                    <p>A public systems project focused on civic infrastructure, service access, and operational analysis.</p>
+                    <span class="category">Civic Systems</span>
+                </article>
+
+                <article class="card">
+                    <div class="card-top">
+                        <h3>Midterm Analysis System</h3>
+                        <span class="badge">Public System</span>
+                    </div>
+                    <p>A public data and analysis system for understanding civic patterns over time.</p>
+                    <span class="category">Public Data</span>
+                </article>
+
+                <article class="card">
+                    <div class="card-top">
+                        <h3>Policy Analysis System</h3>
+                        <span class="badge">Research</span>
+                    </div>
+                    <p>A structured environment for evaluating proposals, downstream effects, and practical tradeoffs.</p>
+                    <span class="category">Policy</span>
+                </article>
+
+                <article class="card">
+                    <div class="card-top">
+                        <h3>Energy Analysis System</h3>
+                        <span class="badge">Research</span>
+                    </div>
+                    <p>Forecasting and simulation tools for energy demand, grid planning, and sustainability decisions.</p>
+                    <span class="category">Energy</span>
+                </article>
+
+                <article class="card">
+                    <div class="card-top">
+                        <h3>Indy BioSystems LBSO</h3>
+                        <span class="badge">Scientific</span>
+                    </div>
+                    <p>Scientific modeling work for biological systems, synthetic biology, and research decision support.</p>
+                    <span class="category">Biological Modeling</span>
+                </article>
+
+                <article class="card">
+                    <div class="card-top">
+                        <h3>Project Phenix</h3>
+                        <span class="badge">Coming Soon</span>
+                    </div>
+                    <p>Experimental work exploring localized climate modeling and sensor-informed adaptation.</p>
+                    <span class="category">Experimental</span>
+                </article>
+            </div>
+        </section>
+
+        <footer>
+            HarnessAI builds practical AI systems for communication, knowledge work, research, and operations.
+        </footer>
     </div>
 
     <script>
